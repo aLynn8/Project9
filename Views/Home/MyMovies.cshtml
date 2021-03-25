@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Joel Hilton";
+}
+@{
+    ViewBag.Header = "My Movies";
+}
+
+@model IEnumerable<Project3.Models.ApplicationResponse>
+<!--Aubrey Farnbach Section 2 Group 1-->
+<!--This page displays the movies that have been added that session-->
+<div onload="LoadMovies()">
+    <p id="Movie_List">
+
+    </p>
+    <table id="movies">
+        <thead>
+            <tr><th>Category</th><th>Title</th><th>Year</th><th>Director</th><th>Rating</th><th>Edited</th><th>Lent_To</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+            <!--This pulls in all data from the lists in TempStorage.cs and filters to not display data when the title (any combination of lower and upper) is "Independence Day"-->
+            @foreach (Project3.Models.ApplicationResponse x in Model.Where(i => i.Title.ToString().ToUpper() != "INDEPENDENCE DAY"))
+            {
+                <tr>
+                    <td>@x.Category</td>
+                    <td>@x.Title</td>
+                    <td>@x.Year</td>
+                    <td>@x.Director</td>
+                    <td>@x.Rating</td>
+                    <td>@x.Edited</td>
+                    <td>@x.Lent_To</td>
+                    <td>@x.Notes</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
