@@ -15,18 +15,18 @@ namespace Project3.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        private IMovieListRepository _repository;
+        private MovieListDbContext _DbContext;
 
-        public HomeController(ILogger<HomeController> logger, IMovieListRepository repository)
+        public HomeController(ILogger<HomeController> logger, MovieListDbContext DbContext)
         {
             _logger = logger;
-            _repository = repository;
+            _DbContext = DbContext;
         }
 
         //Returns Index
         public IActionResult Index()
         {
-            return View(_repository.ApplicationResponses);
+            return View();
         }
 
         //Returns movie list from temp storage within MyMovies view
@@ -53,6 +53,9 @@ namespace Project3.Controllers
         public IActionResult AddMovies(ApplicationResponse appResponse)
         {
             TempStorage.AddApplication(appResponse);
+            _DbContext.ApplicationResponses.Add(appResponse);
+            _DbContext.SaveChanges();
+
             return View("MovieConfirmation", appResponse);
         }
 
